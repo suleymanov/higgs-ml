@@ -1,0 +1,31 @@
+---
+title: "Higgs-ML summary"
+author: "Rail Suleymanov"
+date: "Monday, February 02, 2015"
+output:
+  html_document:
+    keep_md: yes
+---
+
+# Load training data
+Read training data, find number of missing points for each variable, remove missing points.
+```{r}
+train_f <- "training.csv"
+train <- read.csv(train_f)
+train_no_na <- data.frame(train)
+features <- colnames(train)
+n_ina <- vector("integer", length = length(features))
+for (feature in seq_along(features)) {
+    ina <- train[, feature] == -999.0
+    n_ina[feature] <- sum(ina)
+}
+for (feature in seq_along(features)) {
+    ina <- train_no_na[, feature] == -999.0
+    train_no_na <- train_no_na[!ina, ]
+}
+```
+
+# Print simple summary on pure variables
+```{r}
+summary(train_no_na)
+```
