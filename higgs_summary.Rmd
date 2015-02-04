@@ -7,17 +7,18 @@ output:
     keep_md: yes
 ---
 
-# Load training data
+# Load data
+## Training data
 Read training data, find number of missing points for each variable, remove missing points.
 ```{r}
 train_f <- "training.csv"
 train <- read.csv(train_f)
 train_no_na <- data.frame(train)
 features <- colnames(train)
-n_ina <- vector("integer", length = length(features))
+nas1 <- vector("integer", length = length(features))
 for (feature in seq_along(features)) {
     ina <- train[, feature] == -999.0
-    n_ina[feature] <- sum(ina)
+    nas1[feature] <- sum(ina)
 }
 for (feature in seq_along(features)) {
     ina <- train_no_na[, feature] == -999.0
@@ -25,7 +26,111 @@ for (feature in seq_along(features)) {
 }
 ```
 
-# Print simple summary on pure variables
+Number of missing values for each variable.
 ```{r}
-summary(train_no_na)
+library(ggplot2)
+nas <- data.frame(features, nas1)
+nas <- nas[nas1 != 0, ]
+q <- qplot(x = features, y = nas1, data = nas, geom = "bar", stat = "identity")
+q + theme(axis.text.x = element_text(angle = 90)) + xlab("Number of missing values")
 ```
+
+## Test data
+Read test data, find number of missing points for each variable, remove missing points.
+```{r}
+test_f <- "test.csv"
+test <- read.csv(test_f)
+test_no_na <- data.frame(test)
+features <- colnames(test)
+nas2 <- vector("integer", length = length(features))
+for (feature in seq_along(features)) {
+    ina <- test[, feature] == -999.0
+    nas2[feature] <- sum(ina)
+}
+for (feature in seq_along(features)) {
+    ina <- test_no_na[, feature] == -999.0
+    test_no_na <- test_no_na[!ina, ]
+}
+```
+
+Number of missing values for each variable.
+```{r}
+nas <- data.frame(features, nas2)
+nas <- nas[nas2 != 0, ]
+q <- qplot(x = features, y = nas2, data = nas, geom = "bar", stat = "identity")
+q + theme(axis.text.x = element_text(angle = 90)) + xlab("Number of missing values")
+```
+
+# Details of some of features
+```{r}
+s_train <- summary(train_no_na)
+s_test <- summary(test_no_na)
+```
+
+## 1) Estimated mass of the Higgs boson candidate (DER_mass_MMC)
+```{r}
+main <- "Histogram of DER_mass_MMC"
+ylab <- "Frequency"
+leg <- c("Test", "Train")
+hist(test_no_na$DER_mass_MMC, breaks = 50, col = "red", ylab = ylab, main = main, xlim = c(0, 500))
+hist(train_no_na$DER_mass_MMC, breaks = 50, col = "blue", add = T)
+```
+
+Test set statistics: `r s_test[, 2]`
+
+Train set statistics: `r s_train[, 2]`
+
+## 2) Transverse mass between the missing transverse energy and the lepton (DER_mass_transverse_met_lep)
+```{r}
+main <- "Histogram of DER_mass_transverse_met_lep"
+ylab <- "Frequency"
+leg <- c("Test", "Train")
+hist(test_no_na$DER_mass_transverse_met_lep, 
+     breaks = 50, col = "red", ylab = ylab, main = main, xlim = c(0, 200))
+hist(train_no_na$DER_mass_transverse_met_lep, breaks = 50, col = "blue", add = T)
+```
+
+Test set statistics: `r s_test[, 3]`
+
+Train set statistics: `r s_train[, 3]`
+
+## 3) Invariant mass of the hadronic tau and the lepton (DER_mass_vis)
+```{r}
+main <- "Histogram of DER_mass_vis"
+ylab <- "Frequency"
+leg <- c("Test", "Train")
+hist(test_no_na$DER_mass_vis, breaks = 50, col = "red", ylab = ylab, main = main, xlim = c(0, 200))
+hist(train_no_na$DER_mass_vis, breaks = 50, col = "blue", add = T)
+```
+
+Test set statistics: `r s_test[, 4]`
+
+Train set statistics: `r s_train[, 4]`
+
+## 4) Modulus of the vector sum of the transverse momentum of the hadronic tau, the lepton,
+## and the missing transverse energy vector (DER_pt_h)
+```{r}
+main <- "Histogram of DER_pt_h"
+ylab <- "Frequency"
+leg <- c("Test", "Train")
+hist(test_no_na$DER_pt_h, breaks = 50, col = "red", ylab = ylab, main = main, xlim = c(0, 500))
+hist(train_no_na$DER_pt_h, breaks = 50, col = "blue", add = T)
+```
+
+Test set statistics: `r s_test[, 5]`
+
+Train set statistics: `r s_train[, 5]`
+
+## 5) Absolute value of the pseudorapidity separation between the two jets (DER_deltaeta_jet_jet)
+```{r}
+main <- "Histogram of DER_deltaeta_jet_jet"
+ylab <- "Frequency"
+leg <- c("Test", "Train")
+hist(test_no_na$DER_deltaeta_jet_jet, breaks = 50, col = "red", ylab = ylab, main = main, xlim = c(0, 10))
+hist(train_no_na$DER_deltaeta_jet_jet, breaks = 50, col = "blue", add = T)
+legend("topright", pch = 1, col = c("red", "blue"), legend = leg)
+```
+
+Test set statistics: `r s_test[, 6]`
+
+Train set statistics: `r s_train[, 6]`
