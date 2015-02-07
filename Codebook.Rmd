@@ -1,0 +1,118 @@
+---
+title: "Higgs ML Codebook"
+author: "Rail Suleymanov"
+date: "Thursday, February 05, 2015"
+output:
+  html_document:
+    keep_md: yes
+---
+
+
+
+### 1. **EventId**:
+an unique integer identifier of the event. (Not feature actually)
+
+### 2. **DER_mass_MMC**:
+the estimated mass of the Higgs boson candidate, obtained through a probabilistic phase space integration (may be undefined if the topology of the event is too far from the expected topology).
+
+### 3. **DER_mass_transverse_met_lep**:
+the transverse mass between the missing transverse energy and the lepton.
+
+### 4. **DER_mass_vis**:
+the invariant mass of the hadronic tau and the lepton.
+
+### 5. **DER_pt_h**:
+the modulus of the vector sum of the transverse momentum of the hadronic tau, the lepton and the missing transverse energy vector
+
+### 6. **DER_deltaeta_jet_jet**:
+the absolute value of the pseudorapidity separation between the two jets (undefined if **PRI_jet_num** <= 1).
+
+### 7. **DER_mass_jet_jet**:
+the invariant mass of the two jets (undefined if **PRI_jet_num** <= 1).
+
+### 8. **DER_prodeta_jet_jet**:
+the product of the pseudorapidities of the two jets (undefined if **PRI_jet_num** <= 1).
+
+### 9. **DER_deltar_tau_lep**:
+the R separation between the hadronic tau and the lepton.
+
+### 10. **DER_pt_tot**:
+the modulus of the vector sum of the missing tranverse momenta and the transverse momenta of the hadronic tau, the lepton, the leading jet (if **PRI_jet_num** >= 1) and the subleading jet (if **PRI_jet_num** = 2) but not of any additional jets.
+
+### 11. **DER_sum_tot**:
+the sum of the moduli of the transverse momenta of the hadronic tau, the lepton, the leading jet (if **PRI_jet_num** >= 1) and the subleading jet (if **PRI_jet_num** = 2) and the other jets (if **PRI_jet_num** = 3).
+
+### 12. **DER_sum_pt**:
+the sum of the moduli of the transverse momenta of the hadronic tau, the lepton, the leading jet (if **PRI_jet_num** >= 1) and the subleading jet (if **PRI_jet_num** = 2) and the other jets (if **PRI_jet_num** = 3).
+
+### 13. **DER_met_phi_centrality**:
+the centrality of the azimuthal angle of the missing transverse energy vector wrt the hadronic tau and the lepton (undefined if **PRI_jet_num <= 1**).
+
+### 14. **DER_lep_eta_centrality**:
+the centrality of the pseudorapidity of the lepton wrt the two jets (undefined if **PRI_jet_num <= 1**).
+
+### 15. **PRI_tau_pt**:
+the transverse momentum of the hadronic tau.
+
+### 16. **PRI_tau_eta**:
+the pseudorapidity of the hadronic tau.
+
+### 17. **PRI_tau_phi**:
+the azimuth angle of the hadronic tau.
+
+### 18. **PRI_lep_pt**:
+the transverse momentum of the lepton (electron or muon).
+
+### 19. **PRI_lep_eta**:
+the pseudorapidity of the lepton.
+
+### 20. **PRI_lep_phi**:
+the azimuth angle of the lepton.
+
+### 21. **PRI_met**:
+the missing transverse energy.
+
+### 22. **PRI_met_phi**:
+the azimuth angle of the missing transverse energy.
+
+### 23. **PRI_met_sumet**:
+the total transverse energy in the detector.
+
+### 24. **PRI_jet_num**:
+the number of jets (integer with value of 0, 1, 2 or 3; possible larger values are capped at 3).
+
+### 25. **PRI_jet_leading_pt**:
+the transverse momentum of the leading jet, that is the jet with largest transverse momentum (undefined if **PRI_jet_num** = 0).
+
+### 26. **PRI_jet_leading_eta**:
+the pseudorapidity of the leading jet (undefined if **PRI_jet_num** = 0).
+
+### 27. **PRI_jet_leading_phi**:
+the azimuth angle of the leading jet (undefined if **PRI_jet_num** = 0).
+
+### 28. **PRI_jet_subleading_pt**:
+the transverse momentum of the leading jet, that is, the jet with second largest transverse momentum (undefined if **PRI_jet_num** <= 1).
+
+### 29. **PRI_jet_subleading_eta**:
+the pseudorapidity of the subleading jet (undefined if **PRI_jet_num** <= 1).
+
+### 30. **PRI_jet_subleading_phi**:
+the azimuth angle of the subleading jet (undefined if **PRI_jet_num <= 1).
+
+### 31. **PRI_jet_all_pt**:
+the scalar sum of the transverse momentum of all the jets of the events.
+
+### 32. **Weight**:
+the event weight (not feature).
+
+### 33. **Label**:
+the event label, s - signal, b - background (not feature).
+
+## Summary:
+**PRI** prefix states for *primary* variables, **DER** prefix states for *derived* variables. 
+
+There are 30 variables in total, 29 of type double, **PRI_jet_num** is integer. Variable #1 (**DER_mass_MMC**) can be undefined. 
+
+Variables 6-8, 13-14 (**DER_deltaeta_jet_jet**, **DER_mass_jet_jet**, **DER_prodeta_jet_jet**, **DER_met_phi_centrality** and **DER_lep_eta_centrality**) are undefined if **PRI_jet_num** is <= 1. 
+
+Variables 25-30 (**PRI_jet_leading_pt**, **PRI_jet_leading_eta**, **PRI_jet_leading_phi**, **PRI_jet_subleading_pt**, **PRI_jet_subleading_eta**, **PRI_jet_subleading_phi**) are undefined if **PRI_jet_num** = 0;
