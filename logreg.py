@@ -32,7 +32,7 @@ def logreg(X, y) :
 	
 	return Theta
 	
-def logregBFGS(X, y, lam = 0) :
+def logregBFGS(X, y, lam = 0.0) :
 	''' Logistic regression minimization using scipy minimizer BFGS. '''
 	(m, n) = X.shape
 	Theta0 = np.zeros((1, n), float)
@@ -40,7 +40,7 @@ def logregBFGS(X, y, lam = 0) :
 				   args = (X, y, lam), options = { 'disp' : True })
 	return res.x
 	
-def Cost(Theta, X, y, lam = 0) :
+def Cost(Theta, X, y, lam = 0.0) :
 	''' Logistic regression cost function. '''
 	(m, n) = X.shape
 	J = 0
@@ -52,9 +52,11 @@ def Cost(Theta, X, y, lam = 0) :
 	J += (lam / 2.0) * np.dot(Theta[1:], Theta[1:].transpose())
 	J /= m
 	
+	# print type(J)
+	# return J[0]
 	return J[0]
 	
-def Cost_der(Theta, X, y, lam = 0) :
+def Cost_der(Theta, X, y, lam = 0.0) :
 	''' Logistic regression cost function derivatives. '''
 	(m, n) = X.shape
 	tmp = np.dot(X, Theta.transpose())

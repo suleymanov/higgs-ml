@@ -95,10 +95,6 @@ for entry in alltest:
     myscore=-abs(entry[immc]-125.)                                    
     entry+=[myscore]
 
-
-
-
-
 iscore=headertest.index("myscore")
 if iscore<0:
     print "ERROR could not find variable myscore"

@@ -87,5 +87,6 @@ def break_data(data_file, tmplt) :
 			 setD.shape[0] + setE.shape[0] + setF.shape[0]
 	assert num_ex == len(all_data)
 						
+# for testing
 if __name__ == '__main__' :
 	break_data(sys.argv[1], sys.argv[2])
