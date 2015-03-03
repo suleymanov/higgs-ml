@@ -52,8 +52,6 @@ def Cost(Theta, X, y, lam = 0.0) :
 	J += (lam / 2.0) * np.dot(Theta[1:], Theta[1:].transpose())
 	J /= m
 	
-	# print type(J)
-	# return J[0]
 	return J[0]
 	
 def Cost_der(Theta, X, y, lam = 0.0) :
